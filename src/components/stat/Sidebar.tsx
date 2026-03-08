@@ -1,62 +1,66 @@
 'use client';
 
 import React, { useState } from 'react';
-
-const menu = [
-  { id: 0, title: 'Ժողովրդագրություն' },
-  {
-    id: 1,
-    title: 'Միգրացիա',
-    children: [
-      { id: 11, title: 'Ենթաթեմա 1' },
-      { id: 12, title: 'Ենթաթեմա 2' },
-      { id: 13, title: 'Ենթաթեմա 3' },
-      { id: 14, title: 'Ենթաթեմա 4' },
-      { id: 15, title: 'Ենթաթեմա 5' },
-    ],
-  },
-  { id: 2, title: 'Սոցիալական ապահովություն և...' },
-  { id: 3, title: 'Կրթություն և գիտություն' },
-  { id: 4, title: 'Իրավախախտումներ' },
-  { id: 5, title: 'Աշխատուժ' },
-  { id: 6, title: 'Աշխատանք. վճարվող և չվճարվող' },
-  { id: 7, title: 'Աշխատաժամեր' },
-  { id: 8, title: 'Վճարվող և չվճարվող աշխատանքի' },
-  { id: 9, title: 'Շրջակա միջավայր' },
-  { id: 10, title: 'Ժողովրդագրություն' },
-  { id: 11, title: 'Ընտանեկան բռնություն' },
-];
+import { useRouter, useParams } from 'next/navigation';
 
 type MenuItem = {
   id: number;
   title: string;
+  slug: string;
   children?: MenuItem[];
 };
+
+const menu: MenuItem[] = [
+  { id: 0, title: 'Ժողովրդագրություն', slug: 'demography' },
+  {
+    id: 1,
+    title: 'Միգրացիա',
+    slug: 'migration',
+    children: [
+      { id: 11, title: 'Ենթաթեմա 1', slug: 'migration-1' },
+      { id: 12, title: 'Ենթաթեմա 2', slug: 'migration-2' },
+      { id: 13, title: 'Ենթաթեմա 3', slug: 'migration-3' },
+      { id: 14, title: 'Ենթաթեմա 4', slug: 'migration-4' },
+      { id: 15, title: 'Ենթաթեմա 5', slug: 'migration-5' },
+    ],
+  },
+  { id: 2, title: 'Սոցիալական ապահովություն և...', slug: 'social-security' },
+  { id: 3, title: 'Կրթություն և գիտություն', slug: 'education-science' },
+  { id: 4, title: 'Իրավախախտումներ', slug: 'violations' },
+  { id: 5, title: 'Աշխատուժ', slug: 'workforce' },
+  { id: 6, title: 'Աշխատանք. վճարվող և չվճարվող', slug: 'paid-unpaid-work' },
+  { id: 7, title: 'Աշխատաժամեր', slug: 'working-hours' },
+  { id: 8, title: 'Վճարվող և չվճարվող աշխատանքի', slug: 'paid-unpaid-labour' },
+  { id: 9, title: 'Շրջակա միջավայր', slug: 'environment' },
+  { id: 10, title: 'Ժողովրդագրություն', slug: 'demography-2' },
+  { id: 11, title: 'Ընտանեկան բռնություն', slug: 'domestic-violence' },
+];
 
 type MenuListProps = {
   items: MenuItem[];
   level?: number;
   expanded: Set<number>;
   toggleExpand: (id: number) => void;
-  active: number;
-  setActive: (id: number) => void;
+  activeSlug: string;
 };
 
-function isItemOrDescendantActive(item: MenuItem, activeId: number): boolean {
-  if (item.id === activeId) return true;
+function isItemOrDescendantActive(item: MenuItem, activeSlug: string): boolean {
+  if (item.slug === activeSlug) return true;
 
   if (!item.children) return false;
 
-  return item.children.some((child) => isItemOrDescendantActive(child, activeId));
+  return item.children.some((child) => isItemOrDescendantActive(child, activeSlug));
 }
 
-function MenuList({ items, level = 0, expanded, toggleExpand, active, setActive }: MenuListProps) {
+function MenuList({ items, level = 0, expanded, toggleExpand, activeSlug }: MenuListProps) {
+  const router = useRouter();
+
   return (
     <ul className="flex flex-col w-full">
       {items.map((item) => {
         const hasChildren = !!item.children?.length;
         const isExpanded = expanded.has(item.id);
-        const isActive = isItemOrDescendantActive(item, active);
+        const isActive = isItemOrDescendantActive(item, activeSlug);
 
         return (
           <li
@@ -68,18 +72,19 @@ function MenuList({ items, level = 0, expanded, toggleExpand, active, setActive 
             <button
               onClick={() => {
                 if (hasChildren) toggleExpand(item.id);
-                setActive(item.id);
+
+                router.push(`/stat/${item.slug}`);
               }}
               className={`cursor-pointer w-full text-left text-fontSizeXS p-4 flex justify-between items-center
-                ${level > 0 ? 'pl-7 bg-[rgba(241,245,248,1)] font-medium' : ''}
-                ${
-                  isActive
-                    ? level > 0
-                      ? 'border-r-6 border-r-[rgba(22,81,149,1)] text-[rgba(15,104,192,1)]'
-                      : 'bg-[rgba(57,127,206,1)] font-medium text-white'
-                    : 'text-[rgba(55,55,55,1)]'
-                }
-              `}
+              ${level > 0 ? 'pl-7 bg-[rgba(241,245,248,1)] font-medium' : ''}
+              ${
+                isActive
+                  ? level > 0
+                    ? 'border-r-6 border-r-[rgba(22,81,149,1)] text-[rgba(15,104,192,1)]'
+                    : 'bg-[rgba(57,127,206,1)] font-medium text-white'
+                  : 'text-[rgba(55,55,55,1)]'
+              }
+            `}
             >
               <span>{item.title}</span>
             </button>
@@ -90,8 +95,7 @@ function MenuList({ items, level = 0, expanded, toggleExpand, active, setActive 
                 level={level + 1}
                 expanded={expanded}
                 toggleExpand={toggleExpand}
-                active={active}
-                setActive={setActive}
+                activeSlug={activeSlug}
               />
             )}
           </li>
@@ -102,14 +106,18 @@ function MenuList({ items, level = 0, expanded, toggleExpand, active, setActive 
 }
 
 export default function Sidebar() {
+  const params = useParams();
+  const activeSlug = params.slug as string;
+  console.log(activeSlug);
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
-  const [active, setActive] = useState<number>(1);
 
   const toggleExpand = (id: number) => {
     setExpanded((prev) => {
       const newSet = new Set(prev);
+
       if (newSet.has(id)) newSet.delete(id);
       else newSet.add(id);
+
       return newSet;
     });
   };
@@ -125,8 +133,7 @@ export default function Sidebar() {
           items={menu}
           expanded={expanded}
           toggleExpand={toggleExpand}
-          active={active}
-          setActive={setActive}
+          activeSlug={activeSlug}
         />
       </nav>
     </aside>

@@ -3,6 +3,14 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import ChartTab from '@/components/stat/ChartTab';
 
 export default function StatPage() {
   return (
@@ -52,17 +60,64 @@ export default function StatPage() {
         պուրուս ալիքուեթ. Մաուրիս նոն ինթերդում իպսում. Պրոին էլիթ նունկ, բլանդիթ եու ֆաուցիբուս
         վել, ուլտրիսիս ուտ նունկ. Պելլենտեսքուե.
       </TypographyP>
-      <div className="bg-[rgba(241,245,248,1)] px-3 border-t border-[rgba(15,104,192,1)] pt-4.25 pb-4.75 mt-10"></div>
+      <div className="bg-[rgba(241,245,248,1)] px-3 border-t border-[rgba(15,104,192,1)] pt-4.25 pb-4.75 mt-10 flex gap-4">
+        <Select defaultValue="1">
+          <SelectTrigger className="border-none text-[rgba(44,44,44,1)] bg-transparent shadow-none px-2 h-9">
+            <SelectValue placeholder="Select option" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="1">Ժամանակային շարք</SelectItem>
+            <SelectItem value="2">Ժամանակային շարք 2</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select defaultValue="1">
+          <SelectTrigger className="border-none text-[rgba(44,44,44,1)] bg-transparent shadow-none px-2 h-9">
+            <SelectValue placeholder="Select option" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="1">Տարիք</SelectItem>
+            <SelectItem value="2">Տարիք 2</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select defaultValue="1">
+          <SelectTrigger className="border-none text-[rgba(44,44,44,1)] bg-transparent shadow-none px-2 h-9">
+            <SelectValue placeholder="Select option" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="1">Մարզեր</SelectItem>
+            <SelectItem value="2">Մարզեր 2</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select defaultValue="1">
+          <SelectTrigger className="border-none text-[rgba(44,44,44,1)] bg-transparent shadow-none px-2 h-9">
+            <SelectValue placeholder="Select option" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="1">Սեռ</SelectItem>
+            <SelectItem value="2">Սեռ 2</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <div className="border border-[rgba(178,178,178,1)] rounded-2xl mt-6 pb-8.75 overflow-hidden">
         <Tabs defaultValue="diagram" className="w-full">
           <TabsList className="border-b border-b-[rgba(178,178,178,1)] px-5 rounded-none w-full bg-none h-11.75">
-            <TabsTrigger value="diagram">Գծապատկեր</TabsTrigger>
-            <TabsTrigger value="data">Տվյալներ</TabsTrigger>
-            <TabsTrigger value="metadata">Մետատվյալներ</TabsTrigger>
+            <TabsTrigger value="diagram" className="text-[rgba(40,40,40,1)]">
+              Գծապատկեր
+            </TabsTrigger>
+            <TabsTrigger value="data" className="text-[rgba(40,40,40,1)] font-medium">
+              Տվյալներ
+            </TabsTrigger>
+            <TabsTrigger value="metadata" className="text-[rgba(40,40,40,1)] font-medium">
+              Մետատվյալներ
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="diagram">
             <div className="p-7.5">
-              <h4 className="text-fontSizeM text-[rgba(0,0,0,1)]">Գծապատկեր</h4>
+              <ChartTab />
             </div>
           </TabsContent>
           <TabsContent value="data">

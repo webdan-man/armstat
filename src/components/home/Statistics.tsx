@@ -22,15 +22,20 @@ export default function Statistics() {
   }, [emblaApi]);
 
   return (
-    <section className="flex w-full flex-col pb-15 items-center">
+    <section className="flex w-full flex-col pb-15 items-center overflow-hidden">
       <div className="w-full max-w-295 flex flex-col gap-15.75">
         <StatisticsCarousel
           items={[
             'Մշտական բնակչություն',
+            'Կյանքի սպասվող տևողությոն',
+            'Ծնելիություն',
+            'Կյանքի սպասվող տևողությոն',
+            'Կյանքի սպասվող տևողությոն',
             'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
+            'Կյանքի սպասվող տևողությոն',
+            'Ծնելիություն',
+            'Կյանքի սպասվող տևողությոն',
+            'Կյանքի սպասվող տևողությոն',
           ]}
         >
           <div className="flex border-l-[6px] pt-0.75 pb-1.25 border-l-[rgba(204,0,0,1)] pl-4.5 items-center gap-6">
@@ -45,11 +50,16 @@ export default function Statistics() {
         </StatisticsCarousel>
         <StatisticsCarousel
           items={[
-            'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
+            'Աշխատանքային ռեսուրսներ',
+            'Աշխատանք. վճարվող և չվճարվող',
+            'Ծնելիություն',
+            'Աշխատուժ',
+            'Գործազրկություն',
+            'Աշխատանքային ռեսուրսներ',
+            'Աշխատանք. վճարվող և չվճարվող',
+            'Ծնելիություն',
+            'Աշխատուժ',
+            'Գործազրկություն',
           ]}
         >
           <div className="flex border-l-[6px] pt-0.75 pb-1.25 border-l-[rgba(39,81,153,1)] pl-4.5 items-center gap-6">
@@ -64,15 +74,7 @@ export default function Statistics() {
             </div>
           </div>
         </StatisticsCarousel>
-        <StatisticsCarousel
-          items={[
-            'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
-            'Մշտական բնակչություն',
-          ]}
-        >
+        <StatisticsCarousel items={['Հանրակրթություն', 'Մասնագիտական կրթություն', 'Գիտություն']}>
           <div className="flex border-l-[6px] pt-0.75 pb-1.25 border-l-warning pl-4.5 items-center gap-6">
             <Image src="/statistics/statistics.svg" alt="statistics" width={46} height={46} />
             <div className="flex gap-6">

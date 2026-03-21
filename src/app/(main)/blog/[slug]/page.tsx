@@ -1,5 +1,5 @@
-import { TypographyH2, TypographyP } from '@/components/ui/typography';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function PostPage() {
   return (
@@ -63,9 +63,12 @@ export default function PostPage() {
               <p className="leading-[24px] tracking-normal text-textBlack700">
                 Կարևոր է յուրաքանչյուր քարտում գրեք հակիրճ և ճշգրիտ:
               </p>
-              <button className="outline-none w-full rounded-sm border-2 bg-link border-blue600 p-2">
+              <Link
+                href={'/blog/1'}
+                className="text-center w-full rounded-sm border-2 bg-link border-blue600 p-2"
+              >
                 Կարդալ ավելին
-              </button>
+              </Link>
             </div>
           </div>
           <div className="border border-textBlack300 rounded-sm flex flex-col">
@@ -82,9 +85,12 @@ export default function PostPage() {
               <p className="leading-[24px] tracking-normal text-textBlack700">
                 Կարևոր է յուրաքանչյուր քարտում գրեք հակիրճ և ճշգրիտ:
               </p>
-              <button className="outline-none w-full rounded-sm border-2 bg-link border-blue600 p-2">
+              <Link
+                href={'/blog/1'}
+                className="text-center w-full rounded-sm border-2 bg-link border-blue600 p-2"
+              >
                 Կարդալ ավելին
-              </button>
+              </Link>
             </div>
           </div>
           <div className="border border-textBlack300 rounded-sm flex flex-col">
@@ -101,9 +107,12 @@ export default function PostPage() {
               <p className="leading-[24px] tracking-normal text-textBlack700">
                 Կարևոր է յուրաքանչյուր քարտում գրեք հակիրճ և ճշգրիտ:
               </p>
-              <button className="outline-none w-full rounded-sm border-2 bg-link border-blue600 p-2">
+              <Link
+                href={'/blog/1'}
+                className="text-center w-full rounded-sm border-2 bg-link border-blue600 p-2"
+              >
                 Կարդալ ավելին
-              </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,15 +1,24 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { TypographyH1 } from '@/components/ui/typography';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
+import { useState } from 'react';
 
 const items = [
   {
     title: 'Կատալոգ',
-    href: '/catalogue',
+    href: '/',
   },
   {
     title: 'Հրապարակումներ',
-    href: '/publications',
+    href: '/blog',
   },
   {
     title: 'Իրավական ակտեր',
@@ -21,7 +30,15 @@ const items = [
   },
 ];
 
+const languages = [
+  { label: 'Հայերեն', code: 'hy' },
+  { label: 'English', code: 'en' },
+  // { label: 'Русский', code: 'ru' },
+];
+
 export default function Header() {
+  const [activeLang, setActiveLang] = useState('hy');
+
   return (
     <header className="bg-blue1000 flex w-full flex-col items-center">
       <div className="w-full max-w-295 flex py-4 items-center justify-between">
@@ -51,9 +68,28 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <button type="button" className="cursor-pointer size-6 flex items-center justify-center">
-            <Image src="/icons/earth.svg" alt="Earth" width={24} height={24} />
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="flex cursor-pointer items-center gap-1 p-[3px] outline-none"
+              >
+                <Image src="/icons/earth.svg" alt="Earth" width={24} height={24} />
+                <span>{languages.find((l) => l.code === activeLang)?.label}</span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              {languages.map((lang) => (
+                <DropdownMenuItem
+                  key={lang.code}
+                  onClick={() => setActiveLang(lang.code)}
+                  className={lang.code === activeLang ? 'font-bold' : ''}
+                >
+                  {lang.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
       </div>
     </header>

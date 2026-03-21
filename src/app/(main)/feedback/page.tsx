@@ -161,7 +161,10 @@ export default function FeedbackPage() {
             </nav>
           </div>
           <div className="w-full relative max-w-101 h-130.5 shrink-0 -mt-23.5 rounded-[30px]  overflow-hidden -right-15.75">
-            <Image src="/images/map.jpg" alt="Հետադարձ կապ" fill />
+            <iframe
+              src="https://maps.google.com/maps?q=40.1811,44.5136&z=13&output=embed"
+              className="w-full h-full border-0"
+            ></iframe>
           </div>
         </div>
       </div>

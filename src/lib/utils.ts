@@ -9,6 +9,16 @@ const customTwMerge = extendTailwindMerge({
           text: ['fontSizeL', 'fontSizeXS'],
         },
       ],
+      'text-color': [
+        {
+          text: ['textBlack800', 'textBlack100', 'textBlack300'],
+        },
+      ],
+      'bg-color': [
+        {
+          bg: ['textBlack800', 'textBlack100', 'textBlack300'],
+        },
+      ],
     },
   },
 });

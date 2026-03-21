@@ -9,7 +9,7 @@ export default function Hero() {
           <TypographyH2 className="font-medium max-w-180 text-center relative z-10">
             Հայաստանի գենդերային բաշխմամբ վիճակագրության հարթակ
           </TypographyH2>
-          <TypographyP className="max-w-180 text-center mt-6 text-white/70 leading-5 relative z-10">
+          <TypographyP className="max-w-180 text-center mt-6 text-textBlack100/70 leading-5 relative z-10">
             Գենդերային բաշխմամբ վիճակագրությունը կարևոր գործիք և ուղեցույց է կանանց ու տղամարդկանց
             իրավահավասարությունների և հավասար հնարավորության քաղաքականություն մշակողների, ոլորտի
             ակտիվիստների համար:

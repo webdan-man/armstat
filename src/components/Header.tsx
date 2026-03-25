@@ -14,7 +14,7 @@ import { useState } from 'react';
 const items = [
   {
     title: 'Կատալոգ',
-    href: '/',
+    href: '/stat/1',
   },
   {
     title: 'Հրապարակումներ',

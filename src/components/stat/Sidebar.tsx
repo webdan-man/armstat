@@ -341,10 +341,10 @@ const menu: MenuItem[] = [
 ];
 
 type MenuListProps = {
-  items: MenuItem[];
+  items?: MenuItem[];
   level?: number;
-  expanded: Set<number>;
-  toggleExpand: (id: number) => void;
+  expandedPath: number[];
+  toggleExpand: (id: number, level: number) => void;
   activeSlug: string;
 };
 
@@ -355,14 +355,14 @@ function hasActiveDescendant(item: MenuItem, activeSlug: string): boolean {
   );
 }
 
-function MenuList({ items, level = 0, expanded, toggleExpand, activeSlug }: MenuListProps) {
+function MenuList({ items, level = 0, expandedPath, toggleExpand, activeSlug }: MenuListProps) {
   const router = useRouter();
 
   return (
     <ul className="flex flex-col w-full">
-      {items.map((item, index) => {
+      {items?.map((item, index) => {
         const hasChildren = !!item.children?.length;
-        const isExpanded = expanded.has(item.id);
+        const isExpanded = expandedPath[level] === item.id;
         const isActive = item.slug === activeSlug;
         const activeChild = hasActiveDescendant(item, activeSlug);
 
@@ -379,7 +379,9 @@ function MenuList({ items, level = 0, expanded, toggleExpand, activeSlug }: Menu
           >
             <button
               onClick={() => {
-                if (hasChildren) toggleExpand(item.id);
+                if (hasChildren) {
+                  toggleExpand(item.id, level);
+                }
                 router.push(`/stat/${item.slug}`);
               }}
               style={{ paddingLeft: 16 + level * 16 }}
@@ -400,9 +402,9 @@ function MenuList({ items, level = 0, expanded, toggleExpand, activeSlug }: Menu
 
             {hasChildren && isExpanded && (
               <MenuList
-                items={item.children!}
+                items={item.children}
                 level={level + 1}
-                expanded={expanded}
+                expandedPath={expandedPath}
                 toggleExpand={toggleExpand}
                 activeSlug={activeSlug}
               />
@@ -418,16 +420,18 @@ export default function Sidebar() {
   const params = useParams();
   const activeSlug = params.slug as string;
 
-  const [expanded, setExpanded] = useState<Set<number>>(new Set());
+  const [expandedPath, setExpandedPath] = useState<number[]>([]);
 
-  const toggleExpand = (id: number) => {
-    setExpanded((prev) => {
-      const newSet = new Set(prev);
+  const toggleExpand = (id: number, level: number) => {
+    setExpandedPath((prev) => {
+      const newPath = prev.slice(0, level);
 
-      if (newSet.has(id)) newSet.delete(id);
-      else newSet.add(id);
+      if (prev[level] === id) {
+        return newPath;
+      }
 
-      return newSet;
+      newPath[level] = id;
+      return newPath;
     });
   };
 
@@ -440,7 +444,7 @@ export default function Sidebar() {
       <nav className="w-full">
         <MenuList
           items={menu}
-          expanded={expanded}
+          expandedPath={expandedPath}
           toggleExpand={toggleExpand}
           activeSlug={activeSlug}
         />

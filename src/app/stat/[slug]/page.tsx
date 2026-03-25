@@ -56,7 +56,7 @@ export default function StatPage() {
                 </div>
               </div>
               <div className="flex gap-3 items-center">
-                <Image src={'/icons/man.svg'} alt="man" width={17} height={27} />
+                <Image src={'/icons/women.svg'} alt="man" width={17} height={27} />
                 <div className="flex flex-col">
                   <p className="text-fontSizeXS font-semibold text-[rgba(56,56,56,1)]">1,448,982</p>
                   <p className="text-[11px] text-[rgba(110,127,136,1)]">48%</p>

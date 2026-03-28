@@ -1,15 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Montserrat, Noto_Sans_Armenian } from 'next/font/google';
+import { Noto_Sans_Armenian } from 'next/font/google';
 import { SWRProvider } from '@/providers/SWRProvider';
 
 import React from 'react';
 import Header from '@/components/Header';
-
-const montserrat = Montserrat({
-  subsets: ['latin', 'cyrillic'],
-  display: 'swap',
-});
 
 const notoArmenian = Noto_Sans_Armenian({
   subsets: ['armenian'],
@@ -24,10 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${montserrat.className} antialiased`}
-        style={{ '--font-arm': notoArmenian.style.fontFamily } as React.CSSProperties}
-      >
+      <body className={`${notoArmenian.className} antialiased`}>
         <SWRProvider>
           <div className="flex min-h-screen items-center justify-center bg-lightTone1  dark:bg-black">
             <main className="flex min-h-screen w-full flex-col">

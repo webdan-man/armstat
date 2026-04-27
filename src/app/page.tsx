@@ -77,8 +77,12 @@ export default async function Home() {
         blocks={(data?.featuredBlocks ?? []).map((b) => ({
           titleKey: b.titleKey,
           image: absolutizeUrl(b.image, baseUrl),
-          sectionIds: b.sectionIds,
-          sections: (b.sections as Array<{ title?: string }> | undefined) ?? [],
+          sections:
+            ((b.sections as Array<{ name?: string; title?: string }> | undefined) ?? [])
+              .map((s) => ({
+                name: s.name ?? s.title ?? '',
+              }))
+              .filter((s) => Boolean(s.name)) ?? [],
         }))}
       />
       <News

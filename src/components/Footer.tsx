@@ -11,8 +11,8 @@ const items = [
     href: '/publications',
   },
   {
-    title: 'Իրավական ակտեր',
-    href: '/legal-acts',
+    title: 'Տեղեկատվական կենտրոն',
+    href: '/information-center',
   },
   {
     title: 'Հետադարձ կապ',

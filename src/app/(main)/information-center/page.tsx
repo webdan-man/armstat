@@ -64,85 +64,66 @@ export default async function InformationCenterPage() {
     <div className="flex w-full flex-col items-center overflow-x-hidden pb-55">
       <div className="bg-blue1000 w-full flex justify-center">
         <div className="flex flex-col max-w-295 w-full py-12">
-          <TypographyH2>{title}</TypographyH2>
+          <TypographyH2>Տեղեկատվական կենտրոն</TypographyH2>
         </div>
       </div>
 
       <div className="bg-[rgba(245,246,233,1)] w-full flex justify-center">
-        <div className="flex max-w-295 w-full">
+        <div className="flex max-w-295 w-full ">
           <div className="w-full pt-23 pb-26.5 flex flex-col">
-            {description ? (
-              <p className="text-[rgba(55,55,55,1)] mt-8.5">{description}</p>
-            ) : (
-              <div className="mt-8.5 h-18 w-full max-w-202 bg-black/5 rounded-sm" />
-            )}
+            <h3 className="text-[rgba(55,55,55,1)] font-semibold text-[23px]">{title}</h3>
+            <p className="text-[rgba(55,55,55,1)] mt-8.5">{description}</p>
           </div>
           <div className="w-full relative max-w-134.75 h-136.75 shrink-0 -mt-16.75 rounded-r-[159px] rounded-tl-[159px] overflow-hidden -right-18">
-            <Image src={heroImageSrc} alt={title} fill unoptimized />
+            <Image src={heroImageSrc} alt="Տեղեկատվական կենտրոն" fill />
           </div>
         </div>
       </div>
 
       <div className="flex flex-col max-w-295 w-full pt-27.25">
         <div className="flex flex-col max-w-202 w-full justify-start">
-          {(data?.sections ?? []).map((section, idx) => {
+          <h3 className="text-[rgba(55,55,55,1)] font-semibold text-[23px]">
+            ԱՐՄՍՏԱՏ Տեղեկատվական ինֆորմացիա
+          </h3>
+
+          {(data?.sections ?? []).map((section) => {
             const sectionTitle = pickLocale(section.title) ?? '';
             const sectionDescription = pickLocale(section.description) ?? '';
-            const sectionImageSrc = absolutizeUrl(section.image, assetBaseUrl);
             const link = section.link ?? '';
+            const fileLink = section.file ?? '';
 
             return (
-              <div key={`${sectionTitle}-${idx}`} className={idx === 0 ? '' : 'mt-10'}>
-                {sectionTitle && (
-                  <h3 className="text-[rgba(55,55,55,1)] font-semibold text-[23px]">
-                    {sectionTitle}
-                  </h3>
-                )}
-
-                {sectionDescription && (
-                  <p className="mt-3 text-fontSizeXS text-[rgba(85,85,85,1)]">{sectionDescription}</p>
-                )}
+              <div>
+                <h5 className="text-[rgba(0,0,0,1)] font-medium text-ontSizeM mt-10">
+                  {sectionTitle}
+                </h5>
+                <p className="mt-3 text-fontSizeXS text-[rgba(85,85,85,1)]">{sectionDescription}</p>
 
                 <div className="flex items-center gap-10 mt-6">
-                  {link ? (
-                    link.startsWith('http') ? (
-                      <a
-                        href={link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-link flex text-[12px] items-center"
-                      >
-                        <Image src="/icons/download.svg" alt="download" width={20} height={20} /> Տեսնել
-                      </a>
-                    ) : (
-                      <Link href={link} className="text-link flex text-[12px] items-center">
-                        <Image src="/icons/download.svg" alt="download" width={20} height={20} /> Տեսնել
-                      </Link>
-                    )
+                  {fileLink ? (
+                    <a
+                      href={fileLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-link flex text-[12px] items-center"
+                    >
+                      <Image src="/icons/download.svg" alt="download" width={20} height={20} />{' '}
+                      Տեսնել
+                    </a>
                   ) : null}
 
-                  {sectionImageSrc ? (
-                    <div className="relative w-20 h-12 rounded-sm overflow-hidden border border-black/5">
-                      <Image
-                        src={sectionImageSrc}
-                        alt={sectionTitle || title}
-                        fill
-                        unoptimized
-                        className="object-cover"
-                      />
-                    </div>
-                  ) : null}
+                  <p className="text-[12px] text-[rgba(110,127,136,1)]">
+                    Հղում՝{' '}
+                    <Link href={link} className="text-link font-semibold">
+                      Հղման աղբյուրը
+                    </Link>
+                  </p>
                 </div>
               </div>
             );
           })}
-
-          {(!data?.sections || data.sections.length === 0) && (
-            <p className="text-fontSizeXS text-[rgba(85,85,85,1)]">Տվյալներ չեն գտնվել։</p>
-          )}
         </div>
       </div>
     </div>
   );
 }
-

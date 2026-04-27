@@ -9,7 +9,7 @@ type InformationCenterSection = {
   title?: Localized;
   description?: Localized;
   link?: string;
-  image?: string;
+  file?: string;
 };
 
 type InformationCenterResponse = {
@@ -86,14 +86,14 @@ export default async function InformationCenterPage() {
             ԱՐՄՍՏԱՏ Տեղեկատվական ինֆորմացիա
           </h3>
 
-          {(data?.sections ?? []).map((section) => {
+          {(data?.sections ?? []).map((section, index) => {
             const sectionTitle = pickLocale(section.title) ?? '';
             const sectionDescription = pickLocale(section.description) ?? '';
             const link = section.link ?? '';
             const fileLink = section.file ?? '';
 
             return (
-              <div>
+              <div key={index}>
                 <h5 className="text-[rgba(0,0,0,1)] font-medium text-ontSizeM mt-10">
                   {sectionTitle}
                 </h5>

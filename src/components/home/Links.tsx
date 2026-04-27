@@ -6,7 +6,18 @@ import { useCallback, useEffect, useState } from 'react';
 import { TypographyH2, TypographyH3, TypographyP } from '@/components/ui/typography';
 import Image from 'next/image';
 
-export default function Links() {
+type UsefulLink = {
+  url: string;
+  image: string;
+  name: string;
+  description: string;
+};
+
+export type LinksProps = {
+  links: UsefulLink[];
+};
+
+export default function Links({ links }: LinksProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     containScroll: 'trimSnaps',
@@ -57,21 +68,21 @@ export default function Links() {
           <div className="flex flex-col w-full">
             <div ref={emblaRef}>
               <div className="flex gap-6.25">
-                {[1, 2, 3, 4, 5, 6].map((_, i) => (
+                {(links ?? []).map((item, i) => (
                   <div
                     key={i}
                     className="flex-[0_0_auto] w-92 border border-textBlack300 p-6 rounded-lg"
                   >
                     <div className="relative w-full h-39.5">
-                      <Image src="/links/link1.jpg" alt="Link" fill />
+                      <Image src={item.image || '/links/link1.jpg'} alt="Link" fill />
                     </div>
 
                     <TypographyH3 className="mt-4 text-textBlack800">
-                      Վերնագրիրը այստեղ
+                      {item.name || 'Վերնագրիրը այստեղ'}
                     </TypographyH3>
 
                     <TypographyP className="mt-4 text-textBlack700">
-                      Լրացուցիչ տեղեկություններն այստեղ
+                      {item.description || 'Լրացուցիչ տեղեկություններն այստեղ'}
                     </TypographyP>
                   </div>
                 ))}

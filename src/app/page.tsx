@@ -1,18 +1,103 @@
 import Hero from '@/components/home/Hero';
 import News from '@/components/home/News';
-import Links from '@/components/home/Links';
+import LinksClient from '@/components/home/LinksClient';
 import Interesting from '@/components/home/Interesting';
 import Statistics from '@/components/home/Statistics';
 import Footer from '@/components/Footer';
 
-export default function Home() {
+type Localized = Record<string, string | undefined>;
+
+type HomePageResponse = {
+  _id: string;
+  heroTitle?: Localized;
+  heroShortDescription?: Localized;
+  heroTextContent?: Localized;
+  heroImage?: string;
+  featuredBlocks?: Array<{
+    titleKey: string;
+    sectionIds: string[];
+    image?: string;
+    sections: unknown[];
+  }>;
+  newsIds?: string[];
+  newsItems?: Array<{
+    _id: string;
+    title: string;
+    content: string;
+    image?: string;
+    url?: string;
+    createdAt?: string;
+    updatedAt?: string;
+  }>;
+  usefulLinks?: Array<{
+    url?: string;
+    image?: string;
+    name?: Localized;
+    description?: Localized;
+  }>;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+function pickLocale(value?: Localized, locale: string = 'hy') {
+  if (!value) return undefined;
+  return value[locale] ?? value.hy ?? value.ru ?? Object.values(value).find(Boolean);
+}
+
+function absolutizeUrl(pathOrUrl: string | undefined, baseUrl: string) {
+  if (!pathOrUrl) return undefined;
+  if (pathOrUrl.startsWith('http://') || pathOrUrl.startsWith('https://')) return pathOrUrl;
+  if (!pathOrUrl.startsWith('/')) return `${baseUrl}/${pathOrUrl}`;
+  return `${baseUrl}${pathOrUrl}`;
+}
+
+async function getHomePageData(): Promise<HomePageResponse | null> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  if (!baseUrl) return null;
+
+  const res = await fetch(`${baseUrl}/home-page`, { cache: 'no-store' });
+  if (!res.ok) return null;
+
+  return (await res.json()) as HomePageResponse;
+}
+
+export default async function Home() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? '';
+  const data = await getHomePageData();
+
   return (
     <>
-      <Hero />
-      <Statistics />
-      <News />
+      <Hero
+        title={pickLocale(data?.heroTitle)}
+        shortDescription={pickLocale(data?.heroShortDescription)}
+        textContent={pickLocale(data?.heroTextContent)}
+        imageSrc={absolutizeUrl(data?.heroImage, baseUrl)}
+      />
+      <Statistics
+        blocks={(data?.featuredBlocks ?? []).map((b) => ({
+          titleKey: b.titleKey,
+          image: absolutizeUrl(b.image, baseUrl),
+          sectionIds: b.sectionIds,
+          sections: (b.sections as Array<{ title?: string }> | undefined) ?? [],
+        }))}
+      />
+      <News
+        items={
+          (data?.newsItems ?? []).map((item) => ({
+            ...item,
+            image: absolutizeUrl(item.image, baseUrl),
+          })) ?? []
+        }
+      />
       <Interesting />
-      <Links />
+      <LinksClient
+        links={(data?.usefulLinks ?? []).map((link) => ({
+          url: link.url ?? '',
+          image: absolutizeUrl(link.image, baseUrl) ?? '',
+          name: pickLocale(link.name) ?? '',
+          description: pickLocale(link.description) ?? '',
+        }))}
+      />
       <Footer />
     </>
   );

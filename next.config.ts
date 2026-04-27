@@ -9,9 +9,6 @@ const nextConfig: NextConfig = {
     // Local backend runs on localhost/private IP; Next's image optimizer can block these in dev.
     // Serving images directly avoids "url parameter is not allowed" / "private ip" errors.
     unoptimized: true,
-    // Helpful for local dev where backend runs on a different port.
-    // In production you can rely on remotePatterns for tighter control.
-    domains: ['localhost', '127.0.0.1'],
     remotePatterns: [
       // Backend-served uploads (hostname may vary by env)
       { protocol: 'http', hostname: 'localhost', pathname: '/uploads/**' },

@@ -25,7 +25,7 @@ export default function Statistics({ blocks }: StatisticsProps) {
       <div className="w-full max-w-295 flex flex-col gap-15.75">
         {blocks.map((block, idx) => {
           const borderClass = BORDER_COLORS[idx % BORDER_COLORS.length];
-          const items = block.sections.map((s) => s.name);
+          const items = block?.sections?.map((s) => s.name) ?? [];
 
           return (
             <StatisticsCarousel key={`${block.titleKey}-${idx}`} items={items}>

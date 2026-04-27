@@ -34,7 +34,7 @@ export default function Hero({
         </div>
       </section>
       <div className="relative max-w-295 w-full h-87 overflow-hidden rounded-3xl -top-32.5">
-        <img src={imageSrc ?? '/images/hero.jpg'} alt={'Hero'} fill />
+        <Image src={imageSrc} alt={'Hero'} fill />
       </div>
     </div>
   );
